@@ -1,0 +1,10 @@
+# Arquivos temporários / do sistema
+*.zip
+*.rar
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/

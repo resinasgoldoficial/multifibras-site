@@ -1,0 +1,1 @@
+<script>alert('Email enviado com sucesso.');location.href='index.html';</script>
