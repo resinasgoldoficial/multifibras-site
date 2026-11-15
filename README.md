@@ -40,19 +40,19 @@ conteúdo, cores e textos próprios (PT-BR).
 ## Contatos
 
 - WhatsApp/Telefone: **(16) 98807-2089** (`https://wa.me/5516988072089`)
-- E-mail: contato@multifibras.com.br
+- E-mail: contato@multifibras.online
 - Instagram: [@multifibras.oficial](https://www.instagram.com/multifibras.oficial/)
 - Endereço: Rua José Maria Seixas, 260 — Ribeirão Preto/SP
 
 ## Formulário
 
 Os formulários usam o **[FormSubmit](https://formsubmit.co)** (gratuito, sem cadastro),
-que encaminha as mensagens para **contato@multifibras.com.br** por e-mail. Isso funciona em
+que encaminha as mensagens para **contato@multifibras.online** por e-mail. Isso funciona em
 hospedagem estática (Vercel, GitHub Pages etc.), que não executa PHP.
 
-- Endpoint configurado: `https://formsubmit.co/contato@multifibras.com.br`
+- Endpoint configurado: `https://formsubmit.co/contato@multifibras.online`
 - **Ativação (1 vez):** no primeiro envio, o FormSubmit manda um e-mail de confirmação
-  para `contato@multifibras.com.br`. Basta clicar no link para ativar.
+  para `contato@multifibras.online`. Basta clicar no link para ativar.
 - Para trocar o destino, altere o `action` dos formulários nos arquivos `index.html` e
   `contactos/index.html`.
 
@@ -81,7 +81,7 @@ O site é estático e foi preparado para o **[Vercel](https://vercel.com)**:
 4. Deploy. O Vercel gera uma URL `*.vercel.app`; depois dá para ligar o domínio próprio
    em **Settings → Domains**.
 
-> Observação: o Vercel não hospeda e-mail. O endereço `contato@multifibras.com.br` precisa
+> Observação: o Vercel não hospeda e-mail. O endereço `contato@multifibras.online` precisa
 > ser criado em outro serviço (registrador do domínio, Zoho Mail, Google Workspace etc.).
 
 ## Antes de publicar

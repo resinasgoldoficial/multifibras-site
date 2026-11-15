@@ -3,7 +3,7 @@
  * Multi Fibras - recebimento de contatos / pedidos de orçamento
  * Ajuste o e-mail abaixo para o endereço real da empresa.
  */
-$destino = "contato@multifibras.com.br";
+$destino = "contato@multifibras.online";
 
 function limpa($v) {
     return htmlspecialchars(trim(strip_tags($v ?? "")), ENT_QUOTES, "UTF-8");
@@ -24,7 +24,7 @@ $corpo .= "E-mail: $email\n";
 $corpo .= "Assunto: $assunto\n\n";
 $corpo .= "Mensagem:\n$mensagem\n";
 
-$headers  = "From: site@multifibras.com.br\r\n";
+$headers  = "From: site@multifibras.online\r\n";
 if ($email) {
     $headers .= "Reply-To: $email\r\n";
 }
