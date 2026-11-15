@@ -24,8 +24,8 @@ conteúdo, cores e textos próprios (PT-BR).
 
 ## Identidade
 
-- **Cores:** marinho `#102A43` · azul `#168BCE` · branco `#FFFFFF` · cinza `#252B32`
-- A cor primária do tema (antes ciano `#00c0e2`) foi trocada por `#168BCE` em `css/theme.min.css`.
+- **Cores:** marinho `#102A43` · azul `#1379B8` · branco `#FFFFFF` · cinza `#252B32`
+- A cor primária do tema (antes ciano `#00c0e2`) foi trocada por `#1379B8` em `css/theme.min.css`.
 - Ajustes próprios ficam em `css/multifibras.css` (importado pelo `css/master.css`).
 
 ## Imagens

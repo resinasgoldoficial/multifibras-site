@@ -29,16 +29,16 @@ Designed By: Vadzim Liashkevich
 @import url(../assets/owl-carousel/owl.theme.css);
 
  /*-- MAIN STYLES --*/
-@import url(theme.min.css);
+@import url(theme.min.css?v=20261119);
 
  /*-- MULTI FIBRAS --*/
-@import url(multifibras.css);
+@import url(multifibras.css?v=20261119);
 
  /*-- RESPONSIVE FIXES --*/
-@import url(responsive.css);
+@import url(responsive.css?v=20261119);
 
  /*-- MULTI FIBRAS: MOBILE / RESPONSIVIDADE (carregar por último) --*/
-@import url(mobile-fixes.css);
+@import url(mobile-fixes.css?v=20261119);
 
  /*-- COLOR SCHEMES --*/
 /*@import url(red.css);*/

@@ -1,6 +1,6 @@
 /* =========================================================
    Multi Fibras - ajustes de identidade
-   Paleta: #102A43 (marinho) | #168BCE (azul) | #FFFFFF | #252B32
+   Paleta: #102A43 (marinho) | #1379B8 (azul) | #FFFFFF | #252B32
    ========================================================= */
 
 /* botao flutuante do WhatsApp */
@@ -24,7 +24,7 @@
 
 /* links de contato nos cartoes */
 .contact-detail-text a{color:inherit}
-.contact-detail-text a:hover{color:#168BCE}
+.contact-detail-text a:hover{color:#1379B8}
 
 /* mapa responsivo */
 .contact-map iframe{display:block;width:100%;min-height:420px;border:0}
