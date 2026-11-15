@@ -1,0 +1,243 @@
+/* =====================================================================
+   Multi Fibras — correções de responsividade e melhorias para mobile
+   Este arquivo é carregado por último (css/master.css) para prevalecer
+   sobre as regras do tema.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   0) Nenhuma rolagem horizontal (transbordo lateral)
+   --------------------------------------------------------------------- */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------
+   1) Slider da home
+   As camadas do sliderPro carregavam um deslocamento fixo de +50px
+   (transform), criando ~35px de transbordo lateral. Zeramos o deslocamento.
+   --------------------------------------------------------------------- */
+#main-slider-1 .sp-layer {
+  transform: none !important;
+}
+#main-slider-1,
+.main-slider {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------------
+   2) Galeria — grade responsiva
+   Antes: sem CSS, as 74 fotos ficavam empilhadas (página de ~100.000px).
+   --------------------------------------------------------------------- */
+.row2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.row2 .column2 {
+  display: block;
+  margin: 0;
+  min-width: 0;
+}
+.row2 .content {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 4 / 3;
+  background: #eef2f5;
+}
+.row2 .content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.row2 .content:hover img {
+  transform: scale(1.04);
+}
+
+/* Filtros da galeria (se existirem) */
+#myBtnContainer2 {
+  margin-bottom: 22px;
+}
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  margin: 0 6px 6px 0;
+  border: 1px solid #168bce;
+  border-radius: 6px;
+  background: #fff;
+  color: #102a43;
+  font: 600 13px/1 Montserrat, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
+.filtro.ativo {
+  background: #168bce;
+  color: #fff;
+}
+
+@media (max-width: 560px) {
+  .row2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .row2 .content {
+    aspect-ratio: 1 / 1;
+  }
+}
+@media (max-width: 340px) {
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+  .row2 .content {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   3) Alvos de toque confortáveis (mínimo recomendado: 44x44px)
+   --------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .show-menu .my-btn,
+  .show-search .my-btn,
+  .close-search .my-btn {
+    width: 44px;
+    height: 44px;
+    line-height: 42px;
+    font-size: 18px;
+  }
+  .slide-menu .close-menu {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
+  .bottom-2 .my-btn {
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    margin: 0 3px;
+  }
+  .main-slider .my-btn-primary,
+  .page-header-button .my-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .main-slider .my-btn-default {
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+  }
+
+  /* -------------------------------------------------------------------
+     4) Evita o zoom automático do iOS ao focar formulários (fonte < 16px)
+     ------------------------------------------------------------------- */
+  .contacts-form-item input,
+  .contacts-form-item textarea,
+  .get-quote-form input,
+  .get-quote-form textarea,
+  .home-subscribe-form-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   5) Legibilidade: fontes mínimas e fim do texto justificado no mobile
+      (texto justificado em telas estreitas cria "rios" e buracos)
+   --------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  body {
+    font-size: 14px;
+  }
+  .subtitle {
+    font-size: 11px;
+  }
+  .my-btn {
+    font-size: 12px;
+  }
+  .contacts-info-people-company,
+  .home-review-carousel-company {
+    font-size: 12px;
+  }
+
+  .home-about p,
+  .get-quote p,
+  .service-detail p,
+  .contacts-info-text,
+  .home-clients p {
+    text-align: left;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   6) Espaçamentos e cabeçalhos no mobile
+   --------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 90px 0 55px;
+  }
+  .page-header-title h2 {
+    font-size: 26px;
+  }
+  .def-section {
+    padding-top: 55px;
+    padding-bottom: 55px;
+  }
+  .home-about,
+  .get-quote {
+    padding: 55px 15px;
+  }
+  .service-menu {
+    margin-bottom: 35px;
+  }
+  .service-detail-bigimage {
+    padding: 25px 0;
+  }
+  .contacts-info {
+    padding-right: 15px;
+  }
+  .contacts-info-text {
+    margin: 25px 0;
+  }
+  .contacts-info-people {
+    float: none;
+    text-align: left;
+  }
+  .footer {
+    padding: 45px 0;
+  }
+  .footer h4 {
+    margin-bottom: 35px;
+  }
+  .whatsapp-float {
+    width: 52px;
+    height: 52px;
+    font-size: 27px;
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 80px 0 45px;
+  }
+  .page-header-title h2 {
+    font-size: 22px;
+  }
+  .stat-item {
+    padding: 20px;
+  }
+  .home-about,
+  .get-quote {
+    padding: 45px 15px;
+  }
+}

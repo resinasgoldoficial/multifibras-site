@@ -8,3 +8,6 @@ desktop.ini
 # Editores
 .vscode/
 .idea/
+
+# Ferramentas internas de auditoria (nao devem ir para producao)
+_audit/

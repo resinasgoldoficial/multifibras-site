@@ -37,6 +37,9 @@ Designed By: Vadzim Liashkevich
  /*-- RESPONSIVE FIXES --*/
 @import url(responsive.css);
 
+ /*-- MULTI FIBRAS: MOBILE / RESPONSIVIDADE (carregar por último) --*/
+@import url(mobile-fixes.css);
+
  /*-- COLOR SCHEMES --*/
 /*@import url(red.css);*/
 /*@import url(green.css);*/
