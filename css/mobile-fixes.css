@@ -26,6 +26,52 @@ body {
 }
 
 /* ---------------------------------------------------------------------
+   1b) Hero no mobile
+   No desktop o texto fica nas camadas animadas do slider. Em telas
+   pequenas essas camadas ficavam escondidas atras do logo. Por isso o
+   texto passa a ser um bloco estatico, legivel e sem sobreposicao.
+   --------------------------------------------------------------------- */
+.hero-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  #main-slider-1 .sp-layer {
+    display: none !important;
+  }
+  .hero-mobile {
+    display: block;
+    background: #102a43;
+    color: #fff;
+    padding: 26px 0 30px;
+  }
+  .hero-mobile h1 {
+    margin: 0 0 10px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 21px;
+    line-height: 1.28;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .hero-mobile p {
+    margin: 0 0 20px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .hero-mobile .my-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 28px;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+  }
+}
+
+/* ---------------------------------------------------------------------
    2) Galeria — grade responsiva
    Antes: sem CSS, as 74 fotos ficavam empilhadas (página de ~100.000px).
    --------------------------------------------------------------------- */
@@ -101,6 +147,41 @@ body {
 }
 
 /* ---------------------------------------------------------------------
+   2b) Cabeçalho: logo proporcional e barra mais baixa no mobile
+   Antes o logo tinha 100px de altura e ocupava metade da tela, cobrindo
+   o texto do hero e o título das páginas internas.
+   --------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .main-navbar-1 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .main-navbar-1 .logo img {
+    height: 62px;
+    width: auto;
+  }
+  .main-navbar-1 .logo {
+    padding-left: 12px;
+  }
+  .show-menu-control {
+    padding-top: 4px;
+  }
+
+  /* O efeito parallax (stellar) desloca a imagem de fundo e, em telas
+     estreitas, deixava uma faixa cinza na base do cabeçalho. */
+  .page-header {
+    background-color: #102a43;
+    background-position: 50% 50% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-navbar-1 .logo img {
+    height: 54px;
+  }
+}
+
+/* ---------------------------------------------------------------------
    3) Alvos de toque confortáveis (mínimo recomendado: 44x44px)
    --------------------------------------------------------------------- */
 @media (max-width: 992px) {
@@ -171,6 +252,11 @@ body {
   .home-about p,
   .get-quote p,
   .service-detail p,
+  .service-1 p,
+  .home-review-carousel-text,
+  .media-body,
+  .blog-about,
+  .single-post-author-info-text,
   .contacts-info-text,
   .home-clients p {
     text-align: left;
@@ -182,7 +268,7 @@ body {
    --------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .page-header {
-    padding: 90px 0 55px;
+    padding: 100px 0 55px;
   }
   .page-header-title h2 {
     font-size: 26px;
@@ -228,7 +314,7 @@ body {
 
 @media (max-width: 480px) {
   .page-header {
-    padding: 80px 0 45px;
+    padding: 92px 0 45px;
   }
   .page-header-title h2 {
     font-size: 22px;
