@@ -26,6 +26,7 @@ conteúdo, cores e textos próprios (PT-BR).
 
 - **Cores:** marinho `#102A43` · azul `#1379B8` · branco `#FFFFFF` · cinza `#252B32`
 - A cor primária do tema (antes ciano `#00c0e2`) foi trocada por `#1379B8` em `css/theme.min.css`.
+  Esse tom garante contraste 4,71:1 com texto branco (mínimo AA: 4,5:1).
 - Ajustes próprios ficam em `css/multifibras.css` (importado pelo `css/master.css`).
 
 ## Imagens
