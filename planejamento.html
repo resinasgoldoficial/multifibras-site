@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102A43">
+<title>Planejamento Comercial - Multi Fibras</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:Arial,Helvetica,sans-serif;background:#f0f4f8;padding:16px;color:#102A43;line-height:1.35}
+  .wrap{max-width:1180px;margin:0 auto}
+
+  h1{background:#102A43;color:#fff;padding:16px 20px;border-radius:10px 10px 0 0;font-size:19px;text-align:center;line-height:1.25}
+  .sub{background:#0b1f33;color:#9fb3c8;font-size:12px;text-align:center;padding:7px 16px}
+
+  .tabs{display:flex;gap:3px;background:#102A43;padding:8px 8px 0;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab-btn{background:#1379B8;color:#fff;border:none;padding:9px 14px;cursor:pointer;font-size:12.5px;font-weight:bold;border-radius:6px 6px 0 0;white-space:nowrap;flex:0 0 auto;font-family:inherit;transition:background .18s}
+  .tab-btn:hover{background:#0d5a9e}
+  .tab-btn.active{background:#fff;color:#102A43}
+
+  .tab-content{display:none;background:#fff;border-radius:0 0 10px 10px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .tab-content.active{display:block}
+  .sec-title{background:#102A43;color:#fff;padding:11px 14px;border-radius:6px;font-weight:bold;font-size:14px;text-align:center;margin-bottom:12px;line-height:1.3}
+  .legenda{font-size:12.5px;color:#5b7083;margin-bottom:12px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:#102A43;color:#fff;padding:9px 8px;text-align:left;white-space:nowrap;font-size:11.5px;letter-spacing:.3px;position:sticky;top:0;z-index:1}
+  td{padding:8px;border-bottom:1px solid #e6ecf2;vertical-align:middle}
+  tbody tr:nth-child(even) td{background:#f7fafc}
+  tbody tr:hover td{background:#e8f0f7}
+  .center{text-align:center}
+  .nowrap{white-space:nowrap}
+  .garantia{font-weight:bold;color:#1b5e20;background:#e8f5e9!important;text-align:center}
+  .final-price{font-weight:bold;color:#fff;background:#1b5e20!important;text-align:center;font-size:13.5px;white-space:nowrap}
+  .margem{font-weight:bold;color:#e65100;background:#fff3e0!important;text-align:center}
+
+  .aviso{background:#fff3f3;border:1px solid #ffcdd2;border-radius:6px;padding:11px;margin-top:12px;color:#8b0000;font-weight:bold;font-size:12.5px;text-align:center}
+  .dica{background:#f3e5f5;border:1px solid #ce93d8;border-radius:6px;padding:11px;margin-top:12px;color:#4a148c;font-weight:bold;font-size:12.5px;text-align:center}
+  .gar-banner{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:11px;margin-top:12px;color:#1b5e20;font-weight:bold;font-size:12.5px;text-align:center}
+  .total-row td{background:#102A43!important;color:#fff;font-weight:bold;font-size:13.5px}
+
+  /* busca */
+  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+  .toolbar input[type=search]{flex:1;min-width:200px;padding:9px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;font-family:inherit;color:#102A43}
+  .toolbar input[type=search]:focus{outline:2px solid #1379B8;border-color:transparent}
+  .contador{font-size:12px;color:#5b7083;font-weight:bold;white-space:nowrap}
+
+  /* campos */
+  input.qtd,input.preco,input.item-campo{width:100%;padding:8px 9px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;font-family:inherit;background:#fff;color:#102A43}
+  input.qtd,input.preco{text-align:right;font-variant-numeric:tabular-nums}
+  input.item-campo{font-weight:600}
+  input.qtd:focus,input.preco:focus,input.item-campo:focus{outline:2px solid #1379B8;border-color:transparent}
+  td.valor-calc{text-align:right;font-variant-numeric:tabular-nums;font-weight:bold;white-space:nowrap}
+
+  .btn-remove{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;border-radius:6px;width:28px;height:28px;cursor:pointer;font-weight:bold;font-size:15px;line-height:1;font-family:inherit}
+  .btn-remove:hover{background:#fecaca}
+
+  /* painel de resultado */
+  .painel{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:16px}
+  .card{background:#f5f8fb;border:1px solid #dbe4ee;border-radius:8px;padding:12px}
+  .card .rotulo{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:#5b7083;font-weight:bold;margin-bottom:5px}
+  .card .valor{font-size:19px;font-weight:bold;font-variant-numeric:tabular-nums;color:#102A43}
+  .card.destaque{background:#1b5e20;border-color:#1b5e20}
+  .card.destaque .rotulo{color:#bbf7d0}
+  .card.destaque .valor{color:#fff;font-size:22px}
+  .card.lucro{background:#fff3e0;border-color:#ffe0b2}
+  .card.lucro .valor{color:#e65100}
+  .card.margem-card input{width:100%;margin-top:3px;padding:7px 9px;border:1px solid #cbd5e1;border-radius:6px;font-size:16px;font-weight:bold;text-align:right;font-family:inherit;color:#102A43;font-variant-numeric:tabular-nums}
+  .card.margem-card input:focus{outline:2px solid #1379B8;border-color:transparent}
+
+  .acoes{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .btn{padding:10px 16px;border:none;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer;font-family:inherit}
+  .btn-azul{background:#1379B8;color:#fff}
+  .btn-azul:hover{background:#0d5a9e}
+  .btn-claro{background:#e2e8f0;color:#102A43}
+  .btn-claro:hover{background:#cbd5e1}
+  .btn-verde{background:#1b5e20;color:#fff}
+  .btn-verde:hover{background:#14532d}
+  .nota{font-size:11.5px;color:#7b8ea3;margin-top:10px}
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width:760px){
+    body{padding:8px}
+    h1{font-size:16px;padding:13px 12px}
+    .sub{font-size:11px}
+    .tab-content{padding:12px;border-radius:0 0 8px 8px}
+    .tabs{padding:6px 6px 0}
+    .tab-btn{font-size:11.5px;padding:9px 11px}
+
+    /* tabelas viram cartões */
+    table{font-size:12.5px}
+    table.cards thead{display:none}
+    table.cards tbody tr,table.cards tfoot tr{
+      display:block;background:#fff!important;border:1px solid #dbe4ee;border-radius:8px;
+      margin-bottom:9px;padding:6px 10px
+    }
+    table.cards tbody tr:hover td{background:transparent}
+    table.cards td{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      border:none;padding:4px 0;background:transparent!important;text-align:right
+    }
+    table.cards td::before{
+      content:attr(data-label);font-size:10px;text-transform:uppercase;letter-spacing:.4px;
+      color:#7b8ea3;font-weight:bold;text-align:left;flex:0 0 auto
+    }
+    table.cards td[data-label=""]::before{display:none}
+    table.cards td[data-label=""]{justify-content:flex-end}
+    table.cards td:empty{display:none}
+
+    /* calculadora no celular: 2 colunas, compacta */
+    table.cards tr.linha-item{
+      display:grid;grid-template-columns:1fr 1fr;column-gap:14px;row-gap:2px;
+      position:relative;padding:8px 10px;margin-bottom:8px
+    }
+    table.cards tr.linha-item td{padding:2px 0}
+    table.cards td.cel-item{grid-column:1 / -1;grid-row:1;display:block;text-align:left;padding-bottom:4px;padding-right:30px}
+    table.cards td.cel-item::before{display:block;margin-bottom:3px}
+    table.cards td.cel-item input.item-campo{width:calc(100% - 34px)}
+    table.cards td.cel-qtd{grid-column:1;grid-row:2}
+    table.cards td.cel-preco{grid-column:2;grid-row:2}
+    table.cards td.cel-unid{grid-column:1;grid-row:3}
+    table.cards td.cel-subtotal{grid-column:2;grid-row:3;font-size:14px}
+    table.cards td.cel-qtd,table.cards td.cel-preco{justify-content:space-between}
+    table.cards td.cel-qtd input,table.cards td.cel-preco input{max-width:120px}
+    table.cards td.cel-del{position:absolute;top:7px;right:8px;padding:0;width:auto}
+
+    /* fornecedores: 2 colunas por cartão (compacto) */
+    #tabela-fornecedores tbody tr{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;row-gap:1px}
+    #tabela-fornecedores td{padding:2px 0;min-width:0}
+    #tabela-fornecedores td:nth-child(1){grid-column:1 / -1;grid-row:1;border-bottom:1px solid #eef2f7;padding-bottom:5px;margin-bottom:3px}
+    #tabela-fornecedores td:nth-child(2){grid-column:1;grid-row:2}
+    #tabela-fornecedores td:nth-child(4){grid-column:2;grid-row:2}
+    #tabela-fornecedores td:nth-child(3){grid-column:1 / -1;grid-row:3}
+    #tabela-fornecedores td:nth-child(5){grid-column:1;grid-row:4}
+    #tabela-fornecedores td:nth-child(6){grid-column:2;grid-row:4}
+    #tabela-fornecedores td:nth-child(7){grid-column:1 / -1;grid-row:5;font-size:11.5px;color:#5b7083}
+    #tabela-fornecedores td:nth-child(3),#tabela-fornecedores td:nth-child(7){display:block;text-align:left}
+    #tabela-fornecedores td:nth-child(3)::before,#tabela-fornecedores td:nth-child(7)::before{display:block;margin-bottom:2px}
+
+    /* rodapé da calculadora (imprevistos e custo total) */
+    table.cards tfoot tr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px}
+    table.cards tfoot td[colspan]{flex:1 1 auto;display:block;text-align:left!important;padding:0;font-weight:bold}
+    table.cards tfoot td:not([colspan]){flex:0 0 auto;text-align:right!important;padding:0}
+    table.cards tfoot td:empty{display:none}
+    table.cards tfoot tr.total-row{background:#e8f5e9!important;border-color:#a5d6a7;margin-top:2px}
+    table.cards tfoot tr.total-row td{background:transparent!important;color:#1b5e20!important;font-size:14px}
+
+    /* tabela de modelos: rolagem horizontal com 1ª coluna fixa */
+    .rolagem{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table.modelos{min-width:560px;font-size:12px}
+    table.modelos th,table.modelos td{padding:7px 6px}
+    table.modelos th:first-child,table.modelos td:first-child{
+      position:sticky;left:0;z-index:2;background:#fff;box-shadow:2px 0 4px rgba(16,42,67,.08)
+    }
+    table.modelos thead th:first-child{background:#102A43;box-shadow:none}
+    table.modelos tbody tr:nth-child(even) td:first-child{background:#f7fafc}
+
+    .seletor{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+    .seletor::-webkit-scrollbar{display:none}
+
+    .painel{grid-template-columns:1fr;gap:8px}
+    .card .valor{font-size:18px}
+    .card.destaque .valor{font-size:21px}
+    .btn{flex:1 1 auto;text-align:center;padding:11px 12px}
+    .contador{font-size:11px}
+  }
+
+  /* ecrãs estreitos */
+  @media (max-width:420px){
+    h1{font-size:15px}
+    table.cards tr.linha-item{grid-template-columns:1fr}
+    table.cards td.cel-qtd,table.cards td.cel-preco,table.cards td.cel-unid,table.cards td.cel-subtotal{grid-column:1 / -1}
+    table.cards td.cel-qtd{grid-row:2}
+    table.cards td.cel-preco{grid-row:3}
+    table.cards td.cel-unid{grid-row:4}
+    table.cards td.cel-subtotal{grid-row:5}
+    table.cards td.cel-qtd input,table.cards td.cel-preco input{max-width:140px}
+    .painel{grid-template-columns:1fr}
+  }
+
+  @media print{
+    body{background:#fff;padding:0}
+    .wrap{max-width:none}
+    .tabs,.acoes,.btn-remove,.toolbar,.seletor{display:none!important}
+    .tab-content{display:block!important;box-shadow:none;padding:0;page-break-after:always}
+    table{font-size:10.5px}
+    th{position:static;background:#102A43!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    input.qtd,input.preco,input.item-campo{border:none;background:transparent;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📊 Planejamento Comercial — Multi Fibras</h1>
+  <div class="sub">Ribeirão Preto/SP · Isolamento térmico, baús frigoríficos e fibra de vidro</div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)">Fornecedores e Custos</button>
+    <button class="tab-btn" onclick="showTab(1)">Modelos de Orçamento</button>
+    <button class="tab-btn" onclick="showTab(2)">Calculadora</button>
+  </div>
+
+  <!-- ================= TAB 0 ================= -->
+  <div class="tab-content active" id="tab0">
+    <div class="sec-title">MULTI FIBRAS — Fornecedores e Tabela de Custos de Insumos</div>
+    <p class="legenda">Referência de preços para cálculo de orçamentos — atualizar conforme cotações com fornecedores.</p>
+
+    <div class="toolbar">
+      <input id="busca" type="search" placeholder="Buscar fornecedor, cidade ou material…" oninput="filtrarFornecedores()">
+      <span class="contador" id="contador">10 fornecedores</span>
+    </div>
+
+    <table class="cards" id="tabela-fornecedores">
+      <thead>
+        <tr>
+          <th>Fornecedor</th><th>Cidade</th><th>Material/Serviço</th><th>Contato</th>
+          <th>Preço Mín</th><th>Preço Máx</th><th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Fornecedor"><strong>Polglass Compósitos</strong></td><td data-label="Cidade">Ribeirão Preto/SP</td><td data-label="Material">Resina poliéster, mantas FV, gel coat, catalisador</td><td data-label="Contato" class="nowrap">(16) 3634-XXXX</td><td data-label="Mín" class="center">R$ 15</td><td data-label="Máx" class="center">R$ 25</td><td data-label="Obs.">Por kg. Retirada ou entrega local.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Multifrio Refrigeração</strong></td><td data-label="Cidade">Ribeirão Preto/SP</td><td data-label="Material">PU bicomponente (espuma), peças refrigeração</td><td data-label="Contato" class="nowrap">(16) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 160</td><td data-label="Máx" class="center">R$ 250</td><td data-label="Obs.">Por m² aplicado. Pedir cotação por kit.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Rib Therm Isolantes</strong></td><td data-label="Cidade">Ribeirão Preto/SP</td><td data-label="Material">Placas EPS, painéis PIR, manta mineral</td><td data-label="Contato" class="nowrap">(16) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 80</td><td data-label="Máx" class="center">R$ 140</td><td data-label="Obs.">Por m². Verificar espessura 25/50mm.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Cristalflex / Artsol</strong></td><td data-label="Cidade">Campinas/SP</td><td data-label="Material">Manta fibra de vidro, resinas — atacado</td><td data-label="Contato" class="nowrap">(19) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 12</td><td data-label="Máx" class="center">R$ 20</td><td data-label="Obs.">Por kg no atacado. Frete ~R$ 80–150.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Redelease Compósitos</strong></td><td data-label="Cidade">São Paulo/SP</td><td data-label="Material">Epóxi especializado, resinas técnicas</td><td data-label="Contato">www.redelease.com.br</td><td data-label="Mín" class="center">R$ 35</td><td data-label="Máx" class="center">R$ 65</td><td data-label="Obs.">Por kg. Entrega 24–48h via sedex.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Alumipack / CBA Alumínio</strong></td><td data-label="Cidade">RP / Sertãozinho</td><td data-label="Material">Chapas alumínio liso e xadrez</td><td data-label="Contato" class="nowrap">(16) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 90</td><td data-label="Máx" class="center">R$ 160</td><td data-label="Obs.">Por m². Largura padrão 1,0m x 3,0m.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Perfiltech / Vedatruck</strong></td><td data-label="Cidade">São Paulo/SP</td><td data-label="Material">Borrachas de vedação EPDM, perfis borracha</td><td data-label="Contato" class="nowrap">(11) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 18</td><td data-label="Máx" class="center">R$ 35</td><td data-label="Obs.">Por metro linear. Mín. 10m/pedido.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Torkfer / Silpa Carrocerias</strong></td><td data-label="Cidade">São Paulo/SP</td><td data-label="Material">Ferragens, dobradiças, travas, trilhos p/ baú</td><td data-label="Contato" class="nowrap">(11) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 25</td><td data-label="Máx" class="center">R$ 80</td><td data-label="Obs.">Por peça. Verificar kit completo.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Plásticos Polar Brasil</strong></td><td data-label="Cidade">Campinas/SP</td><td data-label="Material">Cortinas PVC polar (câmara fria)</td><td data-label="Contato" class="nowrap">(19) 3xxx-XXXX</td><td data-label="Mín" class="center">R$ 120</td><td data-label="Máx" class="center">R$ 220</td><td data-label="Obs.">Por m². Cor e espessura variável.</td></tr>
+        <tr><td data-label="Fornecedor"><strong>Mercado local (cotação)</strong></td><td data-label="Cidade">Ribeirão Preto/SP</td><td data-label="Material">Parafusos, rebites, thinner, consumíveis</td><td data-label="Contato">—</td><td data-label="Mín" class="center">—</td><td data-label="Máx" class="center">—</td><td data-label="Obs.">Comprar conforme necessidade do serviço.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="aviso">⚠️ Ligue e peça cotação formal antes de cada orçamento. Preços variam com volume e prazo.</div>
+  </div>
+
+  <!-- ================= TAB 1 ================= -->
+  <div class="tab-content" id="tab1">
+    <div class="sec-title">MULTI FIBRAS — Modelos de Orçamento (3 Níveis) · Garantia: 3 Meses</div>
+    <div class="rolagem">
+      <table class="modelos">
+        <thead>
+          <tr><th>CARACTERÍSTICA</th><th>🥈 ESSENCIAL</th><th>⭐ PROFISSIONAL</th><th>💎 PREMIUM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Isolamento térmico</td><td>Manta fibra de vidro 25mm</td><td>Manta FV 50mm + EPS</td><td>PU injetado 50mm + PIR</td></tr>
+          <tr><td>Revestimento interno</td><td>Chapa alumínio liso</td><td>Alumínio xadrez antiderrapante</td><td>Alumínio naval + acabamento</td></tr>
+          <tr><td>Vedação</td><td>Borracha EPDM básica</td><td>EPDM dupla vedação</td><td>EPDM premium c/ trinco</td></tr>
+          <tr><td>Piso</td><td>Alumínio liso</td><td>Alumínio xadrez</td><td>Inox alimentício</td></tr>
+          <tr><td>Acabamento externo</td><td>Sem pintura extra</td><td>Lixamento + selante</td><td>Pintura completa c/ gel coat</td></tr>
+          <tr><td>Fixação</td><td>Parafusos padrão</td><td>Rebites estruturais</td><td>Rebites + reforço estrutural</td></tr>
+          <tr><td>Garantia dos serviços</td><td class="garantia">✅ 3 Meses</td><td class="garantia">✅ 3 Meses</td><td class="garantia">✅ 3 Meses</td></tr>
+          <tr><td>Prazo de entrega</td><td>7 a 10 dias úteis</td><td>5 a 7 dias úteis</td><td>3 a 5 dias úteis</td></tr>
+          <tr><td>Custo material (Fiorino)</td><td>R$ 2.000 – 2.800</td><td>R$ 3.200 – 4.200</td><td>R$ 5.000 – 6.500</td></tr>
+          <tr><td>Mão de obra (Fiorino)</td><td>R$ 1.500 – 2.000</td><td>R$ 2.000 – 2.800</td><td>R$ 2.800 – 3.500</td></tr>
+          <tr><td>Custo total estimado</td><td>R$ 3.500 – 4.800</td><td>R$ 5.200 – 7.000</td><td>R$ 7.800 – 10.000</td></tr>
+          <tr class="calc-price"><td>PREÇO CLIENTE (Fiorino)</td><td class="final-price">R$ 7.500 – 8.900</td><td class="final-price">R$ 9.800 – 11.900</td><td class="final-price">R$ 13.500 – 15.800</td></tr>
+          <tr><td>PREÇO CLIENTE (Van Média)</td><td class="final-price">R$ 11.000 – 13.000</td><td class="final-price">R$ 14.000 – 17.000</td><td class="final-price">R$ 18.000 – 23.000</td></tr>
+          <tr><td>PREÇO CLIENTE (Baú Frigorífico)</td><td class="final-price">R$ 15.000 – 18.000</td><td class="final-price">R$ 20.000 – 25.000</td><td class="final-price">R$ 28.000 – 35.000</td></tr>
+          <tr><td>Margem de lucro estimada</td><td class="margem">~40–45%</td><td class="margem">~45–50%</td><td class="margem">~50–55%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="gar-banner">🛡️ GARANTIA DE 3 MESES inclusa em todos os níveis — destacar sempre ao cliente!</div>
+  </div>
+
+  <!-- ================= TAB 2 ================= -->
+  <div class="tab-content" id="tab2">
+    <div class="sec-title">CALCULADORA DE ORÇAMENTO — MULTI FIBRAS</div>
+    <p class="legenda">Digite a quantidade e o preço unitário — os totais são calculados automaticamente. Os valores ficam salvos neste navegador.</p>
+
+    <table class="cards" id="tabela-calc">
+      <thead>
+        <tr>
+          <th>ITEM / MATERIAL</th><th style="width:92px">QTDE</th><th style="width:62px">UNID.</th>
+          <th style="width:130px">PREÇO UNIT.</th><th style="width:120px;text-align:right">SUBTOTAL</th><th style="width:34px"></th>
+        </tr>
+      </thead>
+      <tbody id="linhas"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" data-label="" style="text-align:right;font-weight:bold">Outros / Imprevistos (5%)</td>
+          <td class="valor-calc" id="imprevistos">R$ 0,00</td>
+          <td data-label=""></td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4" data-label="" style="text-align:right">💰 CUSTO TOTAL (materiais + mão de obra)</td>
+          <td style="text-align:right;white-space:nowrap" id="custo-total">R$ 0,00</td>
+          <td data-label=""></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="painel">
+      <div class="card margem-card">
+        <div class="rotulo">Margem de lucro (%)</div>
+        <input id="margem" type="number" min="1" max="90" step="1" value="45" inputmode="numeric" oninput="calcular()" onblur="ajustarMargem()">
+      </div>
+      <div class="card lucro">
+        <div class="rotulo">Lucro estimado</div>
+        <div class="valor" id="lucro">R$ 0,00</div>
+      </div>
+      <div class="card destaque">
+        <div class="rotulo">✅ Preço final ao cliente</div>
+        <div class="valor" id="preco-final">R$ 0,00</div>
+      </div>
+    </div>
+
+    <div class="acoes">
+      <button class="btn btn-azul" onclick="adicionarItem()">+ Item</button>
+      <button class="btn btn-claro" onclick="restaurarPadrao()">Restaurar padrão</button>
+      <button class="btn btn-verde" onclick="window.print()">Imprimir / PDF</button>
+    </div>
+    <p class="nota">🛡️ Garantia de 3 meses contra defeitos de instalação e vedação inclusa no preço.</p>
+  </div>
+
+</div>
+
+<script>
+/* ---------- utilidades ---------- */
+function escapar(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+const brl = new Intl.NumberFormat('pt-BR', { style:'currency', currency:'BRL', minimumFractionDigits:2 });
+
+/* aceita "1.234,56", "1234,56", "1234.56" e "1234" */
+function numero(v){
+  if (typeof v === 'number') return isFinite(v) ? v : 0;
+  if (v === null || v === undefined) return 0;
+  let s = String(v).trim().replace(/[^\d.,-]/g, '');
+  if (!s) return 0;
+  const temVirgula = s.includes(',');
+  if (temVirgula) {
+    s = s.replace(/\./g, '').replace(',', '.');
+  } else {
+    const partes = s.split('.');
+    if (partes.length > 2) s = partes.slice(0, -1).join('') + '.' + partes[partes.length - 1];
+  }
+  const n = parseFloat(s);
+  return isFinite(n) ? n : 0;
+}
+
+/* ---------- navegação ---------- */
+function showTab(n){
+  document.querySelectorAll('.tab-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.querySelectorAll('.tab-btn').forEach((el,i)=>el.classList.toggle('active',i===n));
+  try{ sessionStorage.setItem('mf_aba', n); }catch(e){}
+}
+
+/* ---------- fornecedores ---------- */
+function filtrarFornecedores(){
+  const termo = (document.getElementById('busca').value || '').toLowerCase().trim();
+  const linhas = document.querySelectorAll('#tabela-fornecedores tbody tr');
+  let visiveis = 0;
+  linhas.forEach(tr => {
+    const achou = !termo || tr.innerText.toLowerCase().includes(termo);
+    tr.style.display = achou ? '' : 'none';
+    if (achou) visiveis++;
+  });
+  document.getElementById('contador').textContent = visiveis + (visiveis === 1 ? ' fornecedor' : ' fornecedores');
+}
+
+/* ---------- calculadora ---------- */
+const PADRAO = [
+  { nome:'Manta fibra de vidro (FV)',        qtd:10, unid:'m²',   preco:18  },
+  { nome:'Espuma PU bicomponente',           qtd:8,  unid:'m²',   preco:200 },
+  { nome:'Resina poliéster',                 qtd:5,  unid:'kg',   preco:20  },
+  { nome:'Chapa alumínio xadrez',            qtd:8,  unid:'m²',   preco:120 },
+  { nome:'Borracha de vedação EPDM',         qtd:12, unid:'m.l.', preco:28  },
+  { nome:'Gel coat / selante externo',       qtd:3,  unid:'kg',   preco:45  },
+  { nome:'Parafusos e rebites estruturais',  qtd:1,  unid:'kit',  preco:180 },
+  { nome:'Ferragens (travas, dobradiças)',   qtd:1,  unid:'kit',  preco:250 },
+  { nome:'Mão de obra (horas técnicas)',     qtd:20, unid:'h',    preco:120 },
+  { nome:'Deslocamento / frete de material', qtd:1,  unid:'vb',   preco:150 }
+];
+const CHAVE = 'mf_orcamento_v2';
+let itens = [];
+
+function render(){
+  const tbody = document.getElementById('linhas');
+  const frag = document.createDocumentFragment();
+  itens.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    tr.className = 'linha-item';
+    tr.innerHTML =
+      '<td class="cel-item" data-label="Item"><input class="item-campo" data-i="' + i + '" value="' + escapar(item.nome) + '" aria-label="Nome do item ' + (i+1) + '"></td>' +
+      '<td class="cel-qtd" data-label="Qtde"><input class="qtd" type="text" inputmode="decimal" data-i="' + i + '" value="' + item.qtd + '" aria-label="Quantidade do item ' + (i+1) + '"></td>' +
+      '<td class="center cel-unid" data-label="Unid." style="color:#5b7083;font-size:12px">' + escapar(item.unid) + '</td>' +
+      '<td class="cel-preco" data-label="Preço unit."><input class="preco" type="text" inputmode="decimal" data-i="' + i + '" value="' + item.preco + '" aria-label="Preço unitário do item ' + (i+1) + '"></td>' +
+      '<td class="valor-calc cel-subtotal" data-label="Subtotal" id="sub-' + i + '">R$ 0,00</td>' +
+      '<td class="cel-del" data-label=""><button class="btn-remove" title="Remover item" aria-label="Remover item ' + (i+1) + '" data-remove="' + i + '">×</button></td>';
+    frag.appendChild(tr);
+  });
+  tbody.innerHTML = '';
+  tbody.appendChild(frag);
+
+  tbody.querySelectorAll('input[data-i]').forEach(el => {
+    el.addEventListener('input', () => {
+      const i = +el.dataset.i;
+      if (el.classList.contains('qtd')) itens[i].qtd = numero(el.value);
+      else if (el.classList.contains('preco')) itens[i].preco = numero(el.value);
+      else itens[i].nome = el.value;
+      calcular();
+    });
+  });
+  tbody.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      itens.splice(+btn.dataset.remove, 1);
+      render();
+      calcular();
+    });
+  });
+}
+
+function calcular(){
+  let subtotal = 0;
+  itens.forEach((item, i) => {
+    const linha = item.qtd * item.preco;
+    subtotal += linha;
+    const cel = document.getElementById('sub-' + i);
+    if (cel) cel.textContent = brl.format(linha);
+  });
+
+  const imprevistos = subtotal * 0.05;
+  const custoTotal = subtotal + imprevistos;
+  const margem = Math.min(Math.max(numero(document.getElementById('margem').value), 0), 90);
+  const precoFinal = custoTotal / (1 - margem / 100);
+  const lucro = Math.max(precoFinal - custoTotal, 0);
+
+  document.getElementById('imprevistos').textContent = brl.format(imprevistos);
+  document.getElementById('custo-total').textContent = brl.format(custoTotal);
+  document.getElementById('preco-final').textContent = brl.format(precoFinal);
+  document.getElementById('lucro').textContent = brl.format(lucro);
+
+  salvar();
+}
+
+function ajustarMargem(){
+  const campo = document.getElementById('margem');
+  let v = numero(campo.value);
+  if (!isFinite(v) || v < 1) v = 1;
+  if (v > 90) v = 90;
+  campo.value = Math.round(v);
+  calcular();
+}
+
+function salvar(){
+  try{
+    localStorage.setItem(CHAVE, JSON.stringify({ itens: itens, margem: document.getElementById('margem').value }));
+  }catch(e){}
+}
+
+function carregar(){
+  try{
+    const bruto = localStorage.getItem(CHAVE);
+    if (!bruto) return false;
+    const dados = JSON.parse(bruto);
+    if (!dados || !Array.isArray(dados.itens) || !dados.itens.length) return false;
+    itens = dados.itens.map(i => ({
+      nome: i.nome || 'Item',
+      qtd: numero(i.qtd),
+      unid: i.unid || 'un',
+      preco: numero(i.preco)
+    }));
+    if (dados.margem !== undefined && dados.margem !== '') {
+      document.getElementById('margem').value = Math.min(Math.max(numero(dados.margem) || 45, 1), 90);
+    }
+    return true;
+  }catch(e){ return false; }
+}
+
+function adicionarItem(){
+  itens.push({ nome:'Novo item', qtd:1, unid:'un', preco:0 });
+  render();
+  calcular();
+  const campos = document.querySelectorAll('#linhas input.item-campo');
+  const ultimo = campos[campos.length - 1];
+  if (ultimo) {
+    ultimo.focus();
+    ultimo.select();
+    if (ultimo.scrollIntoView) ultimo.scrollIntoView({ block:'center', behavior:'smooth' });
+  }
+}
+
+function restaurarPadrao(){
+  if (!confirm('Voltar aos itens e valores originais da calculadora?')) return;
+  itens = PADRAO.map(i => ({ ...i }));
+  document.getElementById('margem').value = 45;
+  render();
+  calcular();
+}
+
+/* ---------- inicialização ---------- */
+(function iniciar(){
+  if (!carregar()) itens = PADRAO.map(i => ({ ...i }));
+  render();
+  calcular();
+  filtrarFornecedores();
+  try{
+    const aba = parseInt(sessionStorage.getItem('mf_aba') || '0', 10);
+    if (!isNaN(aba) && aba >= 0 && aba < document.querySelectorAll('.tab-content').length) showTab(aba);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
